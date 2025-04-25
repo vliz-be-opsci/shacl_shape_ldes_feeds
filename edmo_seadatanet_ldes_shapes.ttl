@@ -1,0 +1,462 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix tree: <https://w3id.org/tree#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ldes: <http://www.w3.org/ns/ldes#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix edmo: <https://edmo.seadatanet.org/ontology#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@base <https://edmo.seadatanet.org/ns/shape#> . 
+
+
+<#OrganizationShape>
+  a sh:NodeShape ;
+  sh:targetClass org:Organization ;
+
+sh:property [
+    sh:path org:name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each resource must have a name (org:name) as a string."@en ;
+    
+  ], [
+    sh:path edmo:collate-centre ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^https://edmo\\\\\\\\.seadatanet\\\\\\\\.org/report/[a-zA-Z0-9_-]+$" ;
+    sh:severity sh:Violation ;
+    sh:message "Collate centre (edmo:collate-centre) is optional but should reference a valid organization or center."@en ;
+    
+  ], [
+    sh:path vcard:country-name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    sh:message "Country name (vcard:country-name) is required but should be a string if provided."@en ;
+    
+  ], [
+    sh:path edmo:is-national-collating-centre ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:severity sh:Info ;
+    sh:message "National collating center (edmo:is-national-collating-centre) is optional but should be a boolean if provided."@en ;
+    
+  ], [
+    sh:path vcard:postal-code ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Postal code (vcard:postal-code) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:street-address ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Street address (vcard:street-address) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:locality ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Locality (vcard:locality) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:region ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Region (vcard:region) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:email ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "It is recommended to provide an email (vcard:email) as an IRI."@en ;
+    
+  ], [
+    sh:path vcard:fax ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Fax (vcard:fax) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:tel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Telephone (vcard:tel) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:logo ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "Logo (vcard:logo) is optional but should be provided as a string or URI."@en ;
+    
+  ], [
+    sh:path geosparql:hasGeometry ;
+    sh:class geosparql:Geometry ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "Geometry (geo:hasGeometry) is optional but should reference a valid geospatial geometry."@en ;
+    
+  ], [
+    sh:path geosparql:asWKT ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype geosparql:wktLiteral ;
+    sh:severity sh:Info ;
+    sh:message "WKT (geo:asWKT) is optional but should follow the WKT format if provided."@en ;
+    
+  ], [
+    sh:path geosparql:hasSerialization ;
+    sh:nodeKind sh:Literal ;
+    sh:severity sh:Info ;
+    sh:message "Serialization (geo:hasSerialization) is optional but should be a string if provided."@en ;
+  ], [
+    sh:path skos:definition ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Definition (skos:definition) is optional but should be a string if provided."@en ;
+  ], [
+    sh:path skos:altName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Alternative name (skos:altName) is optional but should be a string if provided."@en ;
+  ], [
+    sh:path skos:notation ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Notation (skos:notation) is optional but should be a string if provided."@en ;
+  ], [
+    sh:path dc11:modified ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:severity sh:Warning ;
+    sh:message "A modified date (dc:modified) should be a dateTime."@en ;
+  ], [
+    sh:path rdfs:seeAlso ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "See also (rdfs:seeAlso) is optional but should be a string if provided."@en ;
+  ]
+  
+.
+
+<#GeosparqlFeatureShape>
+  a sh:NodeShape ;
+  sh:targetClass geosparql:Feature ;
+
+  sh:property [
+    sh:path org:name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each resource must have a name (org:name) as a string."@en ;
+    
+  ], [
+    sh:path edmo:collate-centre ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^https://edmo\\\\\\\\.seadatanet\\\\\\\\.org/report/[a-zA-Z0-9_-]+$" ;
+    sh:severity sh:Violation ;
+    sh:message "Collate centre (edmo:collate-centre) is optional but should reference a valid organization or center."@en ;
+    
+  ], [
+    sh:path vcard:country-name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    sh:message "Country name (vcard:country-name) is required but should be a string if provided."@en ;
+    
+  ], [
+    sh:path edmo:is-national-collating-centre ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:severity sh:Info ;
+    sh:message "National collating center (edmo:is-national-collating-centre) is optional but should be a boolean if provided."@en ;
+    
+  ], [
+    sh:path vcard:postal-code ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Postal code (vcard:postal-code) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:street-address ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Street address (vcard:street-address) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:locality ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Locality (vcard:locality) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:region ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Region (vcard:region) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:email ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "It is recommended to provide an email (vcard:email) as an IRI."@en ;
+    
+  ], [
+    sh:path vcard:fax ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Fax (vcard:fax) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:tel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Telephone (vcard:tel) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:logo ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "Logo (vcard:logo) is optional but should be provided as a string or URI."@en ;
+    
+  ], [
+    sh:path geosparql:hasGeometry ;
+    sh:class geosparql:Geometry ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "Geometry (geo:hasGeometry) is optional but should reference a valid geospatial geometry."@en ;
+    
+  ], [
+    sh:path geosparql:asWKT ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype geosparql:wktLiteral ;
+    sh:severity sh:Info ;
+    sh:message "WKT (geo:asWKT) is optional but should follow the WKT format if provided."@en ;
+    
+  ], [
+    sh:path geosparql:hasSerialization ;
+    sh:nodeKind sh:Literal ;
+    sh:severity sh:Info ;
+    sh:message "Serialization (geo:hasSerialization) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:definition ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Definition (skos:definition) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:altName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Alternative name (skos:altName) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:notation ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Notation (skos:notation) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path dc11:modified ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:severity sh:Warning ;
+    sh:message "A modified date (dc:modified) should be a dateTime."@en ;
+    
+  ], [
+    sh:path rdfs:seeAlso ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "See also (rdfs:seeAlso) is optional but should be a string if provided."@en ;
+    
+  ]
+. 
+
+<#GeosparqlSpatialObjectShape>
+  a sh:NodeShape ;
+  sh:targetClass geosparql:SpatialObject ;
+
+  sh:property [
+    sh:path org:name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each resource must have a name (org:name) as a string."@en ;
+    
+  ], [
+    sh:path edmo:collate-centre ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^https://edmo\\\\\\\\.seadatanet\\\\\\\\.org/report/[a-zA-Z0-9_-]+$" ;
+    sh:severity sh:Violation ;
+    sh:message "Collate centre (edmo:collate-centre) is optional but should reference a valid organization or center."@en ;
+    
+  ], [
+    sh:path vcard:country-name ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Violation ;
+    sh:message "Country name (vcard:country-name) is required but should be a string if provided."@en ;
+    
+  ], [
+    sh:path edmo:is-national-collating-centre ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:severity sh:Info ;
+    sh:message "National collating center (edmo:is-national-collating-centre) is optional but should be a boolean if provided."@en ;
+    
+  ], [
+    sh:path vcard:postal-code ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Postal code (vcard:postal-code) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:street-address ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Street address (vcard:street-address) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:locality ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Locality (vcard:locality) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:region ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Region (vcard:region) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:email ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "It is recommended to provide an email (vcard:email) as an IRI."@en ;
+    
+  ], [
+    sh:path vcard:fax ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Fax (vcard:fax) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:tel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Telephone (vcard:tel) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path vcard:logo ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "Logo (vcard:logo) is optional but should be provided as a string or URI."@en ;
+    
+  ], [
+    sh:path geosparql:hasGeometry ;
+    sh:class geosparql:Geometry ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "Geometry (geo:hasGeometry) is optional but should reference a valid geospatial geometry."@en ;
+    
+  ], [
+    sh:path geosparql:asWKT ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype geosparql:wktLiteral ;
+    sh:severity sh:Info ;
+    sh:message "WKT (geo:asWKT) is optional but should follow the WKT format if provided."@en ;
+    
+  ], [
+    sh:path geosparql:hasSerialization ;
+    sh:nodeKind sh:Literal ;
+    sh:severity sh:Info ;
+    sh:message "Serialization (geo:hasSerialization) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:definition ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Definition (skos:definition) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:altName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Alternative name (skos:altName) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path skos:notation ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Notation (skos:notation) is optional but should be a string if provided."@en ;
+    
+  ], [
+    sh:path dc11:modified ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:severity sh:Warning ;
+    sh:message "A modified date (dc:modified) should be a dateTime."@en ;
+    
+  ], [
+    sh:path rdfs:seeAlso ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "See also (rdfs:seeAlso) is optional but should be a string if provided."@en ;
+    
+  ]
+. 

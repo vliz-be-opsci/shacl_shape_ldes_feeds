@@ -1,0 +1,220 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia: <http://dbpedia.org/ontology/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix geolink: <http://schema.geolink.org/1.0/base/main#> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix edmo: <https://edmo.seadatanet.org/ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://edmerp.seadatanet.org/ns/shape#>
+
+<#edmerpShape>
+  a sh:NodeShape ;
+  rdfs:label "ResearchProject, Organization, and SpatialObject"@en ;
+  sh:targetClass dbpedia:ResearchProject, org:Organization, geosparql:SpatialObject ;
+
+  # Label
+  sh:property [
+    sh:path rdfs:label ;
+    dash:propertyRole dash:LabelRole ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Each edmerp research project must have a label (rdfs:label) as a string."@en ;
+    sh:name "label"@en
+  ] ;
+
+  # hasAcronym
+  sh:property [
+    sh:path geolink:hasAcronym ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Info ;
+    sh:message "Acronyms (geolink:hasAcronym) is required for EDMERP and should be provided as a string."@en ;
+    sh:name "hasAcronym"@en
+  ] ;
+
+  # rdfs:comment
+  sh:property [
+    sh:path rdfs:comment ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "A summary (rdfs:comment) is required and should be a string if provided."@en ;
+    sh:name "comment"@en
+  ] ;
+
+  # dc11:identifier
+  sh:property [
+    sh:path dc11:identifier ;
+    sh:nodeKind sh:IRIOrLiteral ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each resource must have exactly one identifier (dc:identifier)."@en ;
+    sh:name "identifier"@en
+  ] ;
+
+  # dc11:startedAtTime
+  sh:property [
+    sh:path dc11:startedAtTime ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:datatype xsd:dateTime ;
+    sh:severity sh:Info ;
+    sh:message "Start time (dc:startedAtTime) is required and should be provided as a dateTime."@en ;
+    sh:name "startedAtTime"@en
+  ] ;
+
+  # Contact Point
+  sh:property [
+    sh:path dcat:contactPoint ;
+    sh:class org:Organization ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://edmo\\.seadatanet\\.org/report/[0-9]+$" ;
+    sh:severity sh:Warning ;
+    sh:message "The value for dcat:contactPoint should be an IRI following the pattern: https://edmo.seadatanet.org/report/{identifier}."@en ;
+    sh:name "contactPoint"@en
+  ] ;
+
+  # Project Coordinator
+  sh:property [
+    sh:path dbpedia:projectCoordinator ;
+    sh:class org:Organization ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Warning ;
+    sh:message "A project coordinator (dbpedia:projectCoordinator) is required."@en ;
+    sh:name "projectCoordinator"@en
+  ] ;
+
+  # dcat:theme
+  sh:property [
+    sh:path dcat:theme ;
+    sh:class skos:Concept ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "The dcat:theme should be provided as an IRI referencing a skos:Concept."@en ;
+    sh:name "theme"@en
+  ] ;
+
+  # dc11:subject
+  sh:property [
+    sh:path dc11:subject ;
+    sh:class skos:Concept ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "The subject (dc:subject) is required and should reference a skos:Concept (Mostly C19)."@en ;
+    sh:name "subject"@en
+  ] ;
+
+  # collateCentre
+  sh:property [
+    sh:path edmo:collateCentre ;
+    sh:class org:Organization ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://edmo\\.seadatanet\\.org/report/[a-zA-Z0-9_-]+$" ;
+    sh:severity sh:Warning ;
+    sh:message "The collateCentre should be provided as an IRI referencing an org:Organization and must match the pattern: https://edmo.seadatanet.org/report/{identifier}."@en ;
+    sh:name "Collate Centre"@en
+  ] ;
+
+  # wasAssociatedWith
+  sh:property [
+    sh:path prov:wasAssociatedWith ;
+    sh:class org:Organization ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://edmo\\.seadatanet\\.org/report/[0-9]+$" ;
+    sh:severity sh:Warning ;
+    sh:message "The prov:wasAssociatedWith property should be an IRI referencing an org:Organization."@en ;
+    sh:name "Associated Organization"@en
+  ] ;
+
+  # projectParticipant
+  sh:property [
+    sh:path dbpedia:projectParticipant ;
+    sh:class org:Organization ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://edmo\\.seadatanet\\.org/report/[a-zA-Z0-9_-]+$" ;
+    sh:severity sh:Warning ;
+    sh:message "The dbpedia:projectParticipant should be an IRI referencing an org:Organization and match the pattern: https://edmo.seadatanet.org/report/{identifier}."@en ;
+    sh:name "Project Participant"@en
+  ] ;
+
+  # Optional boolean
+  sh:property [
+    sh:path edmo:is-national-collating-centre ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:severity sh:Warning ;
+    sh:message "The edmo:is-national-collating-centre should be a boolean (true or false)."@en ;
+    sh:name "Is National Collating Centre"@en
+  ] ;
+
+  # Optional geospatial
+  sh:property [
+    sh:path geosparql:asWKT ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype geosparql:wktLiteral ;
+    sh:severity sh:Info ;
+    sh:message "Geospatial data (geo:asWKT) is optional but should use WKT format if included."@en ;
+    sh:name "asWKT"@en
+  ] ;
+
+  sh:property [
+    sh:path geosparql:hasGeometry ;
+    sh:class geosparql:Geometry ;
+    sh:nodeKind sh:IRI ;
+    sh:severity sh:Info ;
+    sh:message "Geometries (geo:hasGeometry) are optional but should reference a Geometry class."@en ;
+    sh:name "hasGeometry"@en
+  ] ;
+
+  # Optional vcard info
+  sh:property [
+    sh:path vcard:country-name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:severity sh:Info ;
+    sh:message "Country name (vcard:country-name) is optional but should be a string if included."@en ;
+    sh:name "country-name"@en
+  ] ;
+
+  # Similar blocks for postal-code, street-address, locality, region, email, fax, tel
+  # Homepage and logo
+  sh:property [
+    sh:path foaf:homepage ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "The foaf:homepage should be a valid URI."@en ;
+    sh:name "Homepage"@en
+  ] ;
+
+  sh:property [
+    sh:path vcard:logo ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:anyURI ;
+    sh:severity sh:Info ;
+    sh:message "The vcard:logo should be provided as a valid URI linking to an image file."@en ;
+    sh:name "Logo"@en
+  ] .

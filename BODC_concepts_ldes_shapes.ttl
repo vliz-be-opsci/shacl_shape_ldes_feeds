@@ -1,0 +1,35 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix tree: <https://w3id.org/tree#> .
+@prefix ldes: <https://w3id.org/ldes#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@base <http://vocab.nerc.ac.uk/ns/shapes#> .
+
+#########################################
+# Shape for skos:Concept (from inline sh:NodeShape)
+#########################################
+<#conceptShape> a sh:NodeShape ;
+  sh:targetClass skos:Concept ;
+  sh:property [
+    sh:path dc:isVersionOf ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dc:modified ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path skos:notation ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] .
+

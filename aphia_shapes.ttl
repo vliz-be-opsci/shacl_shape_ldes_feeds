@@ -1,0 +1,146 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <https://purl.org/dc/terms/> .
+@prefix tree: <https://w3id.org/tree#> .
+@prefix ldes: <https://w3id.org/ldes#> .
+@prefix taxon-name: <https://aphia.org/ns/taxon-name/> .
+@prefix dwc: <https://rs.tdwg.org/dwc/terms/> .
+@prefix skos-xl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tat: <https://aphia.org/ns/attribute-trait/> .
+
+@base <https://aphia.org/ns/shape#> .
+
+#########################################
+# Shape for taxon-name:TaxonName
+#########################################
+<#taxonNameShape> a sh:NodeShape ;
+  sh:targetClass taxon-name:TaxonName ;
+  sh:property [
+    sh:path taxon-name:aphiaID ;
+    sh:datatype xsd:integer ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have exactly 1 taxon-name:aphiaID property."@en ;
+  ] ;
+  sh:property [
+    sh:path dwc:scientificNameID ;
+    sh:datatype xsd:integer ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a dwc:scientificNameID property."@en ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:scientificName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a taxon-name:scientificName property."@en ;
+  ] ;
+  sh:property [
+    sh:path rdfs:label ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a rdfs:label property."@en ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:fullScientificName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a taxon-name:fullScientificName property."@en ;
+  ] ;
+  sh:property [
+    sh:path skos-xl:literalForm ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a skos-xl:literalForm property."@en ;
+  ] ;
+  sh:property [
+    sh:path dwc:scientificName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a dwc:scientificName property."@en ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:authorship ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dwc:scientificNameAuthorship ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dc:modified ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a dc:modified property."@en ;
+  ] ;
+  sh:property [
+    sh:path dc:rightsHolder ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dc:language ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dc:isVersionOf ;
+    sh:nodeKind sh:IRI ;
+    sh:message "Each taxon-name:TaxonName must have a dc:isVersionOf property."@en ;
+    sh:severity sh:Violation ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:hasStatus ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a taxon-name:hasStatus property."@en ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:isOfRank ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon-name:TaxonName must have a taxon-name:isOfRank property."@en ;
+  ] ;
+  sh:property [
+    sh:path dc:license ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:denotes ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+  ] .
+
+#########################################
+# Shape for the anonymous taxon-name:Taxon node
+#########################################
+<#taxonShape> a sh:NodeShape ;
+  sh:targetClass taxon-name:Taxon ;
+  sh:property [
+    sh:path taxon-name:hasAcceptedName ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon must have a taxon-name:hasAcceptedName property."@en ;
+  ] ;
+  sh:property [
+    sh:path tat:hasHabitat ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:severity sh:Violation ;
+    sh:message "Each taxon must have a tat:hasHabitat property."@en ;
+  ] ;
+  sh:property [
+    sh:path taxon-name:hasParent ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+  ] .
+
