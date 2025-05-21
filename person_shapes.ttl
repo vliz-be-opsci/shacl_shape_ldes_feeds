@@ -1,0 +1,153 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix schema: <https://schema.org/> .
+@prefix tree: <https://w3id.org/tree#> .
+@prefix ldes: <https://w3id.org/ldes#> .
+@base <https://marineinfo.org/feed/shape#> .
+
+#########################################
+# Shape for schema:Person
+#########################################
+<#personShape> a sh:NodeShape ;
+  sh:targetClass schema:Person, dcat:Resource ;
+  sh:nodeKind sh:IRI ;
+
+  sh:property [
+    sh:path schema:honorificPrefix ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:givenName ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:familyName ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:identifier ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path schema:description ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:jobTitle ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dc:created ;
+    sh:datatype xsd:date ;
+  ] ;
+  sh:property [
+    sh:path dc:modified ;
+    sh:datatype xsd:date ;
+  ] ;
+  sh:property [
+    sh:path schema:image ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path schema:mainEntityOfPage ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  #sh:property [
+  #  sh:path schema:memberOf ;
+  #  sh:or (
+  #    _:memberOfIRI
+  #    _:memberOfBlankNode
+  #  ) ;
+  #] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  #sh:property [
+  #  sh:path schema:keywords ;
+  #  sh:or (
+  #    _:keywordsIRI
+  #    _:keywordsLiteral
+  #  ) ;
+  #] ;
+  sh:property [
+    sh:path schema:knowsAbout ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path dc:isPartOf ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path org:hasMembership ;
+    sh:node [
+      a sh:NodeShape ;
+      sh:targetClass org:Membership ;
+      sh:property [
+        sh:path org:member ;
+        sh:nodeKind sh:IRI ;
+      ] ;
+      sh:property [
+        sh:path org:organization ;
+        sh:nodeKind sh:IRI ;
+      ] ;
+      sh:property [
+        sh:path org:role ;
+        sh:nodeKind sh:IRI ;
+      ] ;
+      sh:property [
+        sh:path org:memberDuring ;
+        sh:node [
+          a sh:NodeShape ;
+          sh:targetClass time:Interval ;
+          sh:property [
+            sh:path time:hasBeginning ;
+            sh:node [
+              a sh:NodeShape ;
+              sh:targetClass time:Instant ;
+              sh:property [
+                sh:path time:inXSDDate ;
+                sh:datatype xsd:date ;
+              ] ;
+              sh:property [
+                sh:path time:inXSDgYearMonth ;
+                sh:datatype xsd:gYearMonth ;
+              ] ;
+              sh:property [
+                sh:path time:inXSDgYear ;
+                sh:datatype xsd:gYear ;
+              ] ;
+            ] ;
+          ] ;
+          sh:property [
+            sh:path time:hasEnd ;
+            sh:node [
+              a sh:NodeShape ;
+              sh:targetClass time:Instant ;
+              sh:property [
+                sh:path time:inXSDDate ;
+                sh:datatype xsd:date ;
+              ] ;
+              sh:property [
+                sh:path time:inXSDgYearMonth ;
+                sh:datatype xsd:gYearMonth ;
+              ] ;
+              sh:property [
+                sh:path time:inXSDgYear ;
+                sh:datatype xsd:gYear ;
+              ] ;
+            ] ;
+          ] ;
+          sh:property [
+            sh:path <http://www.marineinfo.org/ns/ontology#membershipStatus> ;
+            sh:datatype xsd:anyURI ;
+          ] ;
+        ] ;
+      ] ;
+    ] ;
+  ] .
